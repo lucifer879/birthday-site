@@ -3,36 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday 💖</title>
-
+<title>Happy Birthday My Love 💖</title>
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Segoe UI', sans-serif;
+}
 
 body {
-    margin: 0;
     min-height: 100vh;
-    background: radial-gradient(circle at top, #ff9a9e, #a18cd1);
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fad0c4 50%, #a18cd1 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
 }
 
-/* Title */
+/* Heading */
 h1 {
-    color: white;
-    margin: 10px 0 15px;
-    text-shadow: 0 0 15px rgba(255,255,255,0.8);
-    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    color: #fff;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.9);
+    animation: fadeIn 2s ease forwards;
 }
 
 /* Scene */
 .scene {
-    width: min(90vw, 420px);
-    height: min(90vw, 420px);
-    perspective: 1200px;
+    width: min(92vw, 450px);
+    height: min(92vw, 450px);
+    perspective: 1400px;
     position: relative;
 }
 
@@ -42,10 +46,9 @@ h1 {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    animation: rotate 20s linear infinite;
+    animation: autoRotate 25s linear infinite;
 }
 
-/* Pause on hover (desktop only) */
 @media (hover: hover) {
     .scene:hover .gallery {
         animation-play-state: paused;
@@ -55,14 +58,14 @@ h1 {
 /* Cards */
 .card {
     position: absolute;
-    width: min(65vw, 240px);
-    height: min(80vw, 300px);
+    width: min(70vw, 250px);
+    height: min(85vw, 320px);
     top: 50%;
     left: 50%;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(255,182,193,0.85);
-    background: white;
+    background: #fff;
+    box-shadow: 0 0 30px rgba(255,182,193,0.7), 0 0 50px rgba(255,105,180,0.35);
 }
 
 .card img {
@@ -73,67 +76,96 @@ h1 {
 
 .number {
     position: absolute;
-    bottom: 8px;
-    right: 12px;
-    color: white;
+    bottom: 10px;
+    right: 14px;
+    font-size: 1rem;
     font-weight: bold;
-    text-shadow: 0 0 10px black;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
-/* Center Heart */
+/* Center teddy & message */
 .center {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    text-align: center;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
+    z-index: 10;
 }
 
-.heart {
-    font-size: clamp(40px, 10vw, 64px);
-    animation: pulse 1.5s infinite;
-    text-shadow: 0 0 20px #ff6b81, 0 0 40px #ff9a9e;
+.teddy {
+    width: 100px;
+    animation: teddyBounce 2s infinite ease-in-out;
 }
 
 .message {
-    margin-top: 6px;
-    color: white;
-    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
-    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    margin-top: 10px;
+    color: #fff;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    text-align: center;
+    text-shadow: 0 0 15px rgba(255,255,255,0.85);
+    animation: fadeIn 3s ease forwards;
+}
+
+/* Floating hearts */
+.floating-heart {
+    position: fixed;
+    font-size: 24px;
+    pointer-events: none;
+    animation: floatUp 4s linear forwards;
+    opacity: 0.9;
 }
 
 /* Animations */
-@keyframes rotate {
+@keyframes autoRotate {
     from { transform: rotateY(0deg); }
     to { transform: rotateY(360deg); }
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
+@keyframes teddyBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
 }
 
 /* Footer */
 footer {
-    margin-top: 12px;
-    color: white;
+    margin-top: 18px;
+    color: #fff;
     font-size: clamp(0.85rem, 3vw, 1rem);
+    text-shadow: 0 0 10px rgba(255,255,255,0.6);
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎂 Happy Birthday 🎂</h1>
+<h1>🎉 Happy Birthday, My Love! 🎉</h1>
 
 <div class="scene" id="scene">
     <div class="gallery" id="gallery"></div>
 
     <div class="center">
-        <div class="heart">💖</div>
-        <div class="message">Forever special to me</div>
+        <img src="teddy.jpeg" class="teddy" alt="Teddy Bear">
+        <div class="message">Forever Special to Me 💖</div>
     </div>
 </div>
 
@@ -145,80 +177,75 @@ footer {
 </audio>
 
 <script>
-const imageUrls = [
-    'pic1.jpeg',
-    'pic2.jpeg',
-    'pic3.jpeg',
-    'pic5.jpeg',
-    'pic6.jpeg'
-];
-
+const images = ['pic1.jpeg','pic2.jpeg','pic3.jpeg','pic5.jpeg','pic6.jpeg'];
 const gallery = document.getElementById('gallery');
 const scene = document.getElementById('scene');
-const totalCards = imageUrls.length;
 const radius = window.innerWidth < 500 ? 240 : 320;
 
-let rotation = 0;
-let isDragging = false;
-let startX = 0;
+let rotation = 0, isDragging = false, startX = 0;
 
-/* Create cards */
-imageUrls.forEach((img, index) => {
-    const angle = (360 / totalCards) * index;
+/* Cards */
+images.forEach((src, i) => {
+    const angle = (360 / images.length) * i;
     const card = document.createElement('div');
     card.className = 'card';
-    card.style.transform = `
-        translate(-50%, -50%)
-        rotateY(${angle}deg)
-        translateZ(${radius}px)
-    `;
-    card.innerHTML = `<img src="${img}" alt="Memory ${index + 1}">
-                      <div class="number">${index + 1}</div>`;
+    card.style.transform =
+        `translate(-50%, -50%) rotateY(${angle}deg) translateZ(${radius}px)`;
+    card.innerHTML = `<img src="${src}"><div class="number">${i+1}</div>`;
     gallery.appendChild(card);
 });
 
-/* Swipe / Drag */
-function startDrag(x) {
+/* Drag */
+function startDrag(x){
     isDragging = true;
     startX = x;
     gallery.style.animation = 'none';
 }
-
-function moveDrag(x) {
-    if (!isDragging) return;
-    const sensitivity = window.innerWidth < 500 ? 0.2 : 0.3;
-    const diff = x - startX;
-    rotation += diff * sensitivity;
+function drag(x){
+    if(!isDragging) return;
+    rotation += (x - startX) * (window.innerWidth < 500 ? 0.25 : 0.35);
     gallery.style.transform = `rotateY(${rotation}deg)`;
     startX = x;
 }
+function endDrag(){ isDragging = false; }
 
-function endDrag() {
-    isDragging = false;
-}
-
-/* Mouse */
 scene.addEventListener('mousedown', e => startDrag(e.clientX));
-window.addEventListener('mousemove', e => moveDrag(e.clientX));
+window.addEventListener('mousemove', e => drag(e.clientX));
 window.addEventListener('mouseup', endDrag);
 
-/* Touch */
 scene.addEventListener('touchstart', e => startDrag(e.touches[0].clientX));
-scene.addEventListener('touchmove', e => moveDrag(e.touches[0].clientX));
+scene.addEventListener('touchmove', e => drag(e.touches[0].clientX));
 scene.addEventListener('touchend', endDrag);
+
+/* Floating hearts */
+function createHeart(x){
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.textContent = '💖';
+    heart.style.left = x + 'px';
+    heart.style.bottom = '-30px';
+    heart.style.fontSize = (16 + Math.random()*20) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+}
+
+setInterval(() => {
+    createHeart(Math.random() * window.innerWidth);
+}, 900);
+
+document.body.addEventListener('click', e => createHeart(e.clientX));
 
 /* Music */
 let musicStarted = false;
-function startMusic() {
-    if (musicStarted) return;
+function startMusic(){
+    if(musicStarted) return;
     const music = document.getElementById('bgMusic');
     music.volume = 0.5;
     music.play().catch(()=>{});
     musicStarted = true;
 }
-
-document.body.addEventListener('click', startMusic, { once: true });
-document.body.addEventListener('touchstart', startMusic, { once: true });
+document.body.addEventListener('click', startMusic, { once:true });
+document.body.addEventListener('touchstart', startMusic, { once:true });
 </script>
 
 </body>
