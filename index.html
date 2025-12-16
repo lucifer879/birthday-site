@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💖</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #ff9a9e, #a18cd1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+/* Title */
+h1 {
+    color: white;
+    margin: 10px 0 15px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.8);
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+}
+
+/* Scene */
+.scene {
+    width: min(90vw, 420px);
+    height: min(90vw, 420px);
+    perspective: 1200px;
+    position: relative;
+}
+
+/* Gallery */
+.gallery {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotate 20s linear infinite;
+}
+
+/* Pause on hover (desktop only) */
+@media (hover: hover) {
+    .scene:hover .gallery {
+        animation-play-state: paused;
+    }
+}
+
+/* Cards */
+.card {
+    position: absolute;
+    width: min(65vw, 240px);
+    height: min(80vw, 300px);
+    top: 50%;
+    left: 50%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255,182,193,0.85);
+    background: white;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.number {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 10px black;
+}
+
+/* Center Heart */
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    pointer-events: none;
+}
+
+.heart {
+    font-size: clamp(40px, 10vw, 64px);
+    animation: pulse 1.5s infinite;
+    text-shadow: 0 0 20px #ff6b81, 0 0 40px #ff9a9e;
+}
+
+.message {
+    margin-top: 6px;
+    color: white;
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+/* Animations */
+@keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* Footer */
+footer {
+    margin-top: 12px;
+    color: white;
+    font-size: clamp(0.85rem, 3vw, 1rem);
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎂 Happy Birthday 🎂</h1>
+
+<div class="scene" id="scene">
+    <div class="gallery" id="gallery"></div>
+
+    <div class="center">
+        <div class="heart">💖</div>
+        <div class="message">Forever special to me</div>
+    </div>
+</div>
+
+<footer>Made with ❤️ just for you</footer>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="romantic2.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const imageUrls = [
+    'pic1.jpeg',
+    'pic2.jpeg',
+    'pic3.jpeg',
+    'pic5.jpeg',
+    'pic6.jpeg'
+];
+
+const gallery = document.getElementById('gallery');
+const scene = document.getElementById('scene');
+const totalCards = imageUrls.length;
+const radius = window.innerWidth < 500 ? 240 : 320;
+
+let rotation = 0;
+let isDragging = false;
+let startX = 0;
+
+/* Create cards */
+imageUrls.forEach((img, index) => {
+    const angle = (360 / totalCards) * index;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.transform = `
+        translate(-50%, -50%)
+        rotateY(${angle}deg)
+        translateZ(${radius}px)
+    `;
+    card.innerHTML = `<img src="${img}" alt="Memory ${index + 1}">
+                      <div class="number">${index + 1}</div>`;
+    gallery.appendChild(card);
+});
+
+/* Swipe / Drag */
+function startDrag(x) {
+    isDragging = true;
+    startX = x;
+    gallery.style.animation = 'none';
+}
+
+function moveDrag(x) {
+    if (!isDragging) return;
+    const sensitivity = window.innerWidth < 500 ? 0.2 : 0.3;
+    const diff = x - startX;
+    rotation += diff * sensitivity;
+    gallery.style.transform = `rotateY(${rotation}deg)`;
+    startX = x;
+}
+
+function endDrag() {
+    isDragging = false;
+}
+
+/* Mouse */
+scene.addEventListener('mousedown', e => startDrag(e.clientX));
+window.addEventListener('mousemove', e => moveDrag(e.clientX));
+window.addEventListener('mouseup', endDrag);
+
+/* Touch */
+scene.addEventListener('touchstart', e => startDrag(e.touches[0].clientX));
+scene.addEventListener('touchmove', e => moveDrag(e.touches[0].clientX));
+scene.addEventListener('touchend', endDrag);
+
+/* Music */
+let musicStarted = false;
+function startMusic() {
+    if (musicStarted) return;
+    const music = document.getElementById('bgMusic');
+    music.volume = 0.5;
+    music.play().catch(()=>{});
+    musicStarted = true;
+}
+
+document.body.addEventListener('click', startMusic, { once: true });
+document.body.addEventListener('touchstart', startMusic, { once: true });
+</script>
+
+</body>
+</html>
